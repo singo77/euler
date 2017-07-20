@@ -1,0 +1,36 @@
+import datetime
+import math
+from numpy import *
+
+def Euler21(n):
+    ### Evaluate the sum of all the amicable numbers under n (n=10000)
+    ### Amicable numbers are a&b where d(a)=b and d(b)=a
+    ###    where d(x) is the sum of all proper divisors of x
+
+    t1=datetime.datetime.now()
+    
+    result=0
+    for a in range(1,n+1):
+        d1 = sum(findDivisors(a))
+        if a!=d1:
+            d2 = sum(findDivisors(d1))
+            if a==d2:
+                print(a, d1, d2)
+                result = result + d1 + d2
+    result = result/2 # halve as each set included twice
+    print(result)
+
+    t2=datetime.datetime.now()
+    print(t2-t1)
+
+def findDivisors(n):
+    # returns a list of all the divisors of n
+
+    result=[1]
+    square=math.sqrt(n)
+    square_round=int(square//1)
+    for x in range(2, square_round+1):
+        if n%x==0:
+            result.append(x)
+            if x!=square:
+                result.append(n/x)
